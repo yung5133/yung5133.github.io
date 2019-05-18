@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>linux -- 软链接和硬链接 | 李向阳BLOG</title>
+    <meta name="author" content="李向阳">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content>
+    <meta name="description" content="文件名和数据文件名与数据，这在 Linux 上被分成两个部分：用户数据 (user data) 与元数据 (metadata)。如下所示：用户数据，即文件数据块（data block），是真正记录数据的地方；而元数据（metadata）是记录文件相关属性（如文件名、文件大小、索引节点inode）的地方。并且实际上，linux系统是通过inode进行文件查找等相关操作的。文件名主要是为了方便用户对文件的识记。显示inode节点可以使用stat或ls -i命令硬链接与软链接为解决文件...">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+
+    
+    <link rel="alternate" href="/atom.xml" title="李向阳BLOG" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <main class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <div class="nav-mobile">
+        <button id="open-panel" class="open-panel nav-mobile-item"><i class="icon-documents"></i></button>
+        <h1 class="nav-mobile-title nav-mobile-item">李向阳BLOG</h1>
+        <button id="open-menus" class="open-panel nav-mobile-item"><i class="icon-library"></i></button>
+    </div>
+
+    <nav id="nav-inner" class="nav-inner">
+        
+            <a class="nav-item" href="/">
+                <span class="nav-text">首页</span>
+            </a>
+        
+            <a class="nav-item" href="/archives">
+                <span class="nav-text">文章</span>
+            </a>
+        
+            <a class="nav-item" href="/tags">
+                <span class="nav-text">标签</span>
+            </a>
+        
+            <a class="nav-item" href="/atom.xml">
+                <span class="nav-text">订阅</span>
+            </a>
+        
+            <a class="nav-item" href="/about">
+                <span class="nav-text">关于</span>
+            </a>
+        
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#文件名和数据"><span class="toc-number">1.</span> <span class="toc-text">文件名和数据</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#硬链接与软链接"><span class="toc-number">2.</span> <span class="toc-text">硬链接与软链接</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#链接相关命令使用"><span class="toc-number">3.</span> <span class="toc-text">链接相关命令使用</span></a></li></ol>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            linux -- 软链接和硬链接
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://yoursite.com/2019/04/12/2019-04-12-linux -- 软链接和硬链接/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2019-04-11T16:00:00.000Z" itemprop="datePublished">2019-04-12</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/linux/">linux</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="文件名和数据"><a href="#文件名和数据" class="headerlink" title="文件名和数据"></a>文件名和数据</h2><p>文件名与数据，这在 Linux 上被分成两个部分：用户数据 (user data) 与元数据 (metadata)。如下所示：</p>
+<p><img src="https://raw.githubusercontent.com/RQsir/blog_pic_bed/master/img/image001.jpg" alt></p>
+<p>用户数据，即文件数据块（data block），是真正记录数据的地方；而元数据（metadata）是记录文件相关属性（如文件名、文件大小、索引节点inode）的地方。并且实际上，linux系统是通过inode进行文件查找等相关操作的。文件名主要是为了方便用户对文件的识记。</p>
+<p>显示inode节点可以使用<code>stat</code>或<code>ls -i</code>命令</p>
+<p><img src="https://raw.githubusercontent.com/RQsir/blog_pic_bed/master/img/81a5cfb3ly1g1zkal7avzj20p306xdm9.jpg?token=AKZRZC6Y6ZGLYL2G6G4QUDC4YQHGM" alt></p>
+<h2 id="硬链接与软链接"><a href="#硬链接与软链接" class="headerlink" title="硬链接与软链接"></a>硬链接与软链接</h2><p>为解决文件共享，引入了软硬链接。链接为 Linux 系统解决了文件的共享使用，还带来了隐藏文件路径、增加权限安全及节省存储等好处。</p>
+<p><strong>硬链接</strong>    硬链接文件除了文件名与所指向文件不同外，其余全部相同，即原被链接文件inode对应多个文件名。通过如下方式创建硬链接：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ link oldfile hard.link</span><br></pre></td></tr></table></figure>
+<p>特点如下：</p>
+<ul>
+<li><p>文件有相同的 inode 及 data block；</p>
+</li>
+<li><p>只能对已存在的文件进行创建；</p>
+</li>
+<li><p>不能交叉文件系统进行硬链接的创建；</p>
+</li>
+<li><p>不能对目录进行创建，只可对文件创建；</p>
+</li>
+<li><p>删除一个硬链接文件并不影响其他有相同 inode 号的文件。</p>
+</li>
+</ul>
+<p><strong>软链接</strong>    就是一个普通文件，只是数据块内容写有指向文件的inode信息。软链接也有自己的 inode 号以及用户数据块。通过如下方式创建软链接：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ln -s old.file soft.link</span><br></pre></td></tr></table></figure>
+<p>  特点如下：</p>
+<ul>
+<li>软链接有自己的文件属性及权限等；</li>
+<li>可对不存在的文件或目录创建软链接；</li>
+<li>软链接可交叉文件系统；</li>
+<li>软链接可对文件或目录创建；</li>
+<li>创建软链接时，链接计数 i_nlink 不会增加；</li>
+<li>删除软链接并不影响被指向的文件，但若被指向的原文件被删除，则相关软连接被称为死链接（即 dangling link，若被指向路径文件被重新创建，死链接可恢复为正常的软链接）。</li>
+</ul>
+<h2 id="链接相关命令使用"><a href="#链接相关命令使用" class="headerlink" title="链接相关命令使用"></a>链接相关命令使用</h2><p>find 命令，其不仅可查找某文件的软链接，还可以用于查找相同 inode 的所有硬链接。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// 查找目录下文件的软链接</span><br><span class="line">$ find &lt;directory&gt; -lname &lt;file&gt;</span><br><span class="line"></span><br><span class="line">// 查找目录下文件的硬链接</span><br><span class="line">$ find &lt;directory&gt; -samefile &lt;file&gt;</span><br><span class="line">or</span><br><span class="line">$ find &lt;directory&gt; -inum &lt;inode&gt;</span><br><span class="line"></span><br><span class="line">// 列出目录下所有的软链接</span><br><span class="line">$ find &lt;directory&gt; -<span class="built_in">type</span> l -ls</span><br></pre></td></tr></table></figure>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "7fbe80427f54741e289f",
+        clientSecret: "f34ed5fd92e54c9000bd37ba951948cb939deff5",
+        repo: "sanonz.github.io",
+        owner: "sanonz",
+        admin: ["sanonz"],
+        id: "2019/04/12/2019-04-12-linux -- 软链接和硬链接",
+        distractionFreeMode: true,
+        title: "linux -- 软链接和硬链接",
+        body: "http://yoursite.com/2019/04/12/2019-04-12-linux -- 软链接和硬链接/",
+        labels: ["linux"]
+    }).render('comments');
+    </script>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e4027971a230b210f4671f485b33846a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+</footer>
+
+    </main>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var nodes = {
+            nav: $('#nav'),
+            aside: $('#aside'),
+            asideInner: $('#aside-inner'),
+            navInner: $('#nav-inner')
+        };
+
+        var doing = false;
+        nodes.asideInner.on('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', function() {
+            if (nodes.aside.hasClass('mobile-open')) {
+                nodes.aside.removeClass('mobile-open');
+            } else {
+                nodes.aside.removeClass('mobile-close panel-show');
+            }
+            doing = false;
+        });
+        $('#open-panel, #aside-mask').on('click', function() {
+            if (doing) {
+                return;
+            }
+            
+            if (nodes.aside.hasClass('panel-show')) {
+                nodes.aside.addClass('mobile-close');
+            } else {
+                nodes.aside.addClass('mobile-open panel-show');
+            }
+        });
+        $('#open-menus').on('click', function() {
+            nodes.navInner.slideToggle();
+        });
+
+        if (window.innerWidth <= 960) {
+            setTimeout(function() {
+                nodes.navInner.slideUp();
+            }, 3000);
+        }
+    });
+    </script>
+    
+        <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+        </script>
+    
+
+</body>
+</html>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="UTF-8">
+
+    
+
+    
+
+    <title>Git -- 常用操作总结(一) | 李向阳BLOG</title>
+    <meta name="author" content="李向阳">
+    <meta name="version" content="1.0.0">
+    <meta name="keywords" content>
+    <meta name="description" content="1 git初识1.1 git 安装与登陆安装(linux)：1sudo apt-get install git登陆：由于git的分布式特性，每一个使用其的电脑都必须注册自己，如下：12git config --global user.name &#34;Your name&#34;git ocnfig --global user.email &#34;Your email&#34;1.2 git创建版本库创建一个空目录12mkdir learngitcd ./learngit将该目录初始化为git仓库1gi...">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+
+    
+    <link rel="alternate" href="/atom.xml" title="李向阳BLOG" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/images/favicon.ico">
+    
+
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+    <main class="app">
+        <header class="header clearfix">
+    <div id="nav" class="nav">
+    <div class="nav-mobile">
+        <button id="open-panel" class="open-panel nav-mobile-item"><i class="icon-documents"></i></button>
+        <h1 class="nav-mobile-title nav-mobile-item">李向阳BLOG</h1>
+        <button id="open-menus" class="open-panel nav-mobile-item"><i class="icon-library"></i></button>
+    </div>
+
+    <nav id="nav-inner" class="nav-inner">
+        
+            <a class="nav-item" href="/">
+                <span class="nav-text">首页</span>
+            </a>
+        
+            <a class="nav-item" href="/archives">
+                <span class="nav-text">文章</span>
+            </a>
+        
+            <a class="nav-item" href="/tags">
+                <span class="nav-text">标签</span>
+            </a>
+        
+            <a class="nav-item" href="/atom.xml">
+                <span class="nav-text">订阅</span>
+            </a>
+        
+            <a class="nav-item" href="/about">
+                <span class="nav-text">关于</span>
+            </a>
+        
+    </nav>
+</div>
+
+    <aside id="aside" class="aside">
+    <div id="aside-mask" class="aside-mask"></div>
+    <div id="aside-inner" class="aside-inner">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit"><i class="icon-search-stroke"></i></button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+
+        
+        
+        
+        
+
+        
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-git初识"><span class="toc-number">1.</span> <span class="toc-text">1 git初识</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-git-安装与登陆"><span class="toc-number">1.0.1.</span> <span class="toc-text">1.1 git 安装与登陆</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-git创建版本库"><span class="toc-number">1.0.2.</span> <span class="toc-text">1.2 git创建版本库</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#2-git版本控制"><span class="toc-number">2.</span> <span class="toc-text">2 git版本控制</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-版本回退"><span class="toc-number">2.0.1.</span> <span class="toc-text">2.1 版本回退</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-工作区-暂存区-版本库"><span class="toc-number">2.0.2.</span> <span class="toc-text">2.2 工作区 暂存区 版本库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-新增、修改与删除"><span class="toc-number">2.0.3.</span> <span class="toc-text">2.3 新增、修改与删除</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-操作回滚"><span class="toc-number">2.0.4.</span> <span class="toc-text">2.4 操作回滚</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-git远程操作"><span class="toc-number">3.</span> <span class="toc-text">3 git远程操作</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-与github进行连接"><span class="toc-number">3.0.1.</span> <span class="toc-text">3.1 与github进行连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-2-添加远程仓库"><span class="toc-number">3.0.2.</span> <span class="toc-text">3.2 添加远程仓库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-3-克隆远程库"><span class="toc-number">3.0.3.</span> <span class="toc-text">3.3 克隆远程库</span></a></li></ol></li>
+        
+    </div>
+</aside>
+
+</header>
+
+        <div id="content" class="content"><article class="article" itemscope itemprop="blogPost">
+    
+    <header class="article-header">
+        
+        <h1 itemprop="name">
+            Git -- 常用操作总结(一)
+        </h1>
+        
+        <div class="article-meta clearfix">
+            <a class="article-date" href="http://yoursite.com/2018/11/26/2018-11-26-Git -- 常用操作总结(一)/index.html">
+    
+    <i class="icon-calendar"></i>
+    
+    <time datetime="2018-11-25T16:00:00.000Z" itemprop="datePublished">2018-11-26</time>
+</a>
+
+            
+<div class="article-tag-list">
+    <i class="icon-tag"></i>
+    <a class="article-tag-link" href="/tags/git/">git</a>
+</div>
+
+
+        </div>
+    </header>
+    
+    <section class="article-body markdown-body">
+        
+        <h2 id="1-git初识"><a href="#1-git初识" class="headerlink" title="1 git初识"></a>1 git初识</h2><h4 id="1-1-git-安装与登陆"><a href="#1-1-git-安装与登陆" class="headerlink" title="1.1 git 安装与登陆"></a>1.1 git 安装与登陆</h4><p>安装(linux)：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
+<p>登陆：由于git的分布式特性，每一个使用其的电脑都必须注册自己，如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "Your name"</span><br><span class="line">git ocnfig --global user.email "Your email"</span><br></pre></td></tr></table></figure>
+<h4 id="1-2-git创建版本库"><a href="#1-2-git创建版本库" class="headerlink" title="1.2 git创建版本库"></a>1.2 git创建版本库</h4><p>创建一个空目录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir learngit</span><br><span class="line">cd ./learngit</span><br></pre></td></tr></table></figure>
+<p>将该目录初始化为git仓库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init   #git的初始化，即将当前目录与git仓库进行关联，当前目录会自动生成一个.git文件夹</span><br></pre></td></tr></table></figure>
+<p>把文件添加到版本库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo "Git is a version control system" &gt;&gt; readme.txt</span><br><span class="line">git add readme.txt 						#将文件由workdirctory添加到stage(暂存区)</span><br><span class="line">git commit -m "wrote a readme file" 	#将stage的修改添加到版本库</span><br></pre></td></tr></table></figure>
+<h2 id="2-git版本控制"><a href="#2-git版本控制" class="headerlink" title="2 git版本控制"></a>2 git版本控制</h2><h4 id="2-1-版本回退"><a href="#2-1-版本回退" class="headerlink" title="2.1 版本回退"></a>2.1 版本回退</h4><p>提交历史显示命令，用于查看提交历史记录，以便确定要回退到哪个版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log  #查看提交历史</span><br></pre></td></tr></table></figure>
+<p>回退命令，其中HEAD指向当前版本，HEAD^指向上一个版本，HEAD^^指向上上个版本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard commit_id	#将仓库回退到指定id版本</span><br><span class="line"><span class="meta">#</span> or</span><br><span class="line">git reset --hard HEAD^		#将仓库回退到上一版本</span><br></pre></td></tr></table></figure>
+<p>当版本回退成功后，原来的版本丢失，通过 <strong>git log</strong> 无法查看其<em>commit _id</em> ，这时候可以使用<strong>git reflog</strong> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reflog  #查看命令历史</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-工作区-暂存区-版本库"><a href="#2-2-工作区-暂存区-版本库" class="headerlink" title="2.2 工作区 暂存区 版本库"></a>2.2 工作区 暂存区 版本库</h4><p><img src="https://raw.githubusercontent.com/RQsir/blog_pic_bed/master/img/81a5cfb3gy1fxnwq2yx6fj20w70i50t9.jpg?token=AKZRZC55GAYZLKDWPOILOCK4YQGSM" alt></p>
+<p>工作区：可以理解为自己的本机工作目录，并且这个目录是还未进入git版本库管理的。在这个状态下，我们可以进行增、删、改各种操作。</p>
+<p>暂存区：是所有操作真正提交到版本库的前一步，主要是追踪各种操作，以及为多次操作后的批量提交作准备，避免频繁提交。</p>
+<p>版本库：可以简单理解为仓库，进入版本库也就意味着已经登记入库了。版本库还可以进一步分为多个分支，一般有一个master主分支，多个次分支，这样可以进行多个版本的跟踪。</p>
+<h4 id="2-3-新增、修改与删除"><a href="#2-3-新增、修改与删除" class="headerlink" title="2.3 新增、修改与删除"></a>2.3 新增、修改与删除</h4><p>不管是文件的新增，还是修改，我们在工作区完成操作后，都是通过add命令完成向暂存区提交的</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add readme.txt</span><br></pre></td></tr></table></figure>
+<p>若是删除文件，我们同样要向暂存区报备，通过rm命令记录删除操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rm readme.txt</span><br></pre></td></tr></table></figure>
+<p>最后通过commit命令提交到分支使操作真正生效</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m "add readme.txt/del readme.txt"</span><br></pre></td></tr></table></figure>
+<h4 id="2-4-操作回滚"><a href="#2-4-操作回滚" class="headerlink" title="2.4 操作回滚"></a>2.4 操作回滚</h4><p>操作回滚分为三类场景：（1）如果你只是误操作，还未进行add提交到暂存区，那么只需一步操作就可以反悔</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -- "readme.txt"  #由于还未add，即意味暂存区还保留着该操作在工作区的上一状态，直接checkout就行</span><br></pre></td></tr></table></figure>
+<p>（2）如果你手残地add到了暂存区，那就要分两步完成回滚</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset HEDA "readme.txt"   #将暂存区的该次误操作丢弃，并重置为分支中的最新版本状态，其他操作不受影响</span><br><span class="line">git checkout -- "readme.txt"  #将此时暂存区的状态映射到工作区，即将误操作回复为版本库状态</span><br></pre></td></tr></table></figure>
+<p>（3）如果你不幸到已经commit了误操作，那即意味着误操作已经进入分支中，成为了最新版本，这时候只能通过版本回退的方式来补救</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^ #后退到误操作之前的那个版本，这样可能丢失除误操作以外的其他有用操作</span><br></pre></td></tr></table></figure>
+<p>从以上操作我们不难发现，暂存区的存在确保了工作区的不当操作不会直接影响分支；同时，我们可以将多次add/rm操作进行一次commit提交，可以起到对操作的分组效果；最后，如果你只是在场景(1)(2)回退，那么可以最大程度的减小对其他add/rm操作的影响，不至于在回滚某个操作时，丢失其他操作。而(3)版本回退显然不是针对某个特定操作，这种回退的代价是难以估量的。</p>
+<h2 id="3-git远程操作"><a href="#3-git远程操作" class="headerlink" title="3 git远程操作"></a>3 git远程操作</h2><h4 id="3-1-与github进行连接"><a href="#3-1-与github进行连接" class="headerlink" title="3.1 与github进行连接"></a>3.1 与github进行连接</h4><p>通过SSH协议将本地git仓库与github进行配对，首先生成SSH key</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C "youremail"</span><br></pre></td></tr></table></figure>
+<p>执行过后，生成<code>.ssh</code> 目录，其中<code>id_rsa</code> 和<code>id_rsa_pub</code> 分别代表私钥和公钥。我们只需将公钥中的字符串添加到github账户的”AccountSetting”的”SSH Keys”页面中，就OK了。</p>
+<h4 id="3-2-添加远程仓库"><a href="#3-2-添加远程仓库" class="headerlink" title="3.2 添加远程仓库"></a>3.2 添加远程仓库</h4><p>添加github仓库命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add orgin 仓库地址  #orgin为默认远程仓库地址别名</span><br></pre></td></tr></table></figure>
+<p>将本地库推送到远程仓库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin master  #第一次将本地的master分支推送到远程，以后可以省略'-u'</span><br></pre></td></tr></table></figure>
+<h4 id="3-3-克隆远程库"><a href="#3-3-克隆远程库" class="headerlink" title="3.3 克隆远程库"></a>3.3 克隆远程库</h4><p>直接从远程克隆git仓库，也可以完成本地与远程的关联</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git clone &lt;ssh/https&gt;远程库地址</span><br></pre></td></tr></table></figure>
+
+        
+    </section>
+</article>
+
+
+
+<div class="comments">
+    <div id="comments"></div>
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+    new Gitalk({
+        clientID: "7fbe80427f54741e289f",
+        clientSecret: "f34ed5fd92e54c9000bd37ba951948cb939deff5",
+        repo: "sanonz.github.io",
+        owner: "sanonz",
+        admin: ["sanonz"],
+        id: "2018/11/26/2018-11-26-Git -- 常用操作总结(一)",
+        distractionFreeMode: true,
+        title: "Git -- 常用操作总结(一)",
+        body: "http://yoursite.com/2018/11/26/2018-11-26-Git -- 常用操作总结(一)/",
+        labels: ["git"]
+    }).render('comments');
+    </script>
+</div>
+
+</div>
+        <footer class="footer">
+    Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>, Theme by <a href="https://github.com/sanonz/hexo-theme-concise" target="_blank">Concise</a>
+
+    
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?e4027971a230b210f4671f485b33846a";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+    
+</footer>
+
+    </main>
+
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/1.9.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(function() {
+        var nodes = {
+            nav: $('#nav'),
+            aside: $('#aside'),
+            asideInner: $('#aside-inner'),
+            navInner: $('#nav-inner')
+        };
+
+        var doing = false;
+        nodes.asideInner.on('webkitAnimationEnd mozAnimationEnd oAnimationEnd oanimationend animationend', function() {
+            if (nodes.aside.hasClass('mobile-open')) {
+                nodes.aside.removeClass('mobile-open');
+            } else {
+                nodes.aside.removeClass('mobile-close panel-show');
+            }
+            doing = false;
+        });
+        $('#open-panel, #aside-mask').on('click', function() {
+            if (doing) {
+                return;
+            }
+            
+            if (nodes.aside.hasClass('panel-show')) {
+                nodes.aside.addClass('mobile-close');
+            } else {
+                nodes.aside.addClass('mobile-open panel-show');
+            }
+        });
+        $('#open-menus').on('click', function() {
+            nodes.navInner.slideToggle();
+        });
+
+        if (window.innerWidth <= 960) {
+            setTimeout(function() {
+                nodes.navInner.slideUp();
+            }, 3000);
+        }
+    });
+    </script>
+    
+        <script type="text/javascript" src="/js/scrollspy.min.js"></script>
+        <script type="text/javascript">
+        $(document.body).scrollspy({target: '#aside-inner'});
+        </script>
+    
+
+</body>
+</html>
